@@ -45,7 +45,7 @@ final class Contract
 
         $this->address = $address;
         $this->provider = $provider;
-        $this->contract = (new Web3Contract($this->provider::getHttpProvider(), json_encode($abi)))->at($address);
+        $this->contract = (new Web3Contract($this->provider->web3->provider, json_encode($abi)))->at($address);
     }
 
     /**

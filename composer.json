@@ -1,6 +1,6 @@
 {
     "name": "multiplechain/evm-chains",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "description": "Ready node library for transacting on many EVM based chains.",
     "type": "library",
     "license": "MIT",

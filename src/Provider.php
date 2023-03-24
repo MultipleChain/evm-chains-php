@@ -25,12 +25,6 @@ final class Provider
      * @var object
      */
     private $network;
-    
-    /**
-     * Web3 instance
-     * @var Web3
-     */
-    private static $web3;
 
     /**
      * Current blockchain gas price
@@ -43,6 +37,12 @@ final class Provider
      * @var int
      */
     private $defaultNonce = 1;
+    
+    /**
+     * Web3 instance
+     * @var Web3
+     */
+    public $web3;
 
     /**
      * Eth instance / RPC Api methods
@@ -101,8 +101,8 @@ final class Provider
             $this->network->nativeCurrency = (object) $this->network->nativeCurrency;
         }
 
-        self::$web3 = new Web3(new HttpProvider(new HttpRequestManager($this->network->rpcUrl, $timeOut)));
-        $this->methods = self::$web3->eth;
+        $this->web3 = new Web3(new HttpProvider(new HttpRequestManager($this->network->rpcUrl, $timeOut)));
+        $this->methods = $this->web3->eth;
     
         $this->time = time();
     }
@@ -261,7 +261,7 @@ final class Provider
     public function getChainId() : int
     {
         $chainId = null;
-        self::$web3->net->version(function($err, $res) use (&$chainId) {
+        $this->web3->net->version(function($err, $res) use (&$chainId) {
             if ($err) {
                 throw new \Exception($err->getMessage(), $err->getCode());
             } else {
@@ -353,14 +353,6 @@ final class Provider
     public function getCurrency() : object
     {
         return $this->network->nativeCurrency;
-    }
-
-    /**
-     * @return HttpProvider
-     */
-    public static function getHttpProvider() : HttpProvider
-    {
-        return self::$web3->provider;
     }
 
     /**
