@@ -266,10 +266,10 @@ final class Transaction
      */
     public function verifyTransferWithData(object $config) : bool
     {
-        if (!isset($config->tokenAddress)) {
-            return $this->verifyCoinTransferWithData($config->receiver, $config->amount);
-        } else {
+        if (isset($config->tokenAddress) && !is_null($config->tokenAddress)) {
             return $this->verifyTokenTransferWithData($config->receiver, $config->amount, $config->tokenAddress);
+        } else {
+            return $this->verifyCoinTransferWithData($config->receiver, $config->amount);
         }
     }
 
