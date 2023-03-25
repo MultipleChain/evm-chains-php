@@ -40,6 +40,12 @@ final class Transaction
 
         $this->hash = $txHash;
         $this->provider = $provider;
+
+        try {
+            $this->getData();
+        } catch (Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**
