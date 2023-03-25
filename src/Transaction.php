@@ -57,12 +57,8 @@ final class Transaction
             if ($err) {
                 throw new \Exception($err->getMessage(), $err->getCode());
             } else {
-                if (TransactionValidator::validate((array)$tx) === false) {
-                    throw new \Exception('Invalid transaction data!', 25000);
-                } else {
-                    $this->data->status = $tx->status;
-                    $this->data->gasUsed = $tx->gasUsed;
-                }
+                $this->data->status = isset($tx->status) ? $tx->status : null;
+                $this->data->gasUsed = isset($tx->gasUsed) ? $tx->gasUsed : null;
             }
         });
     }
