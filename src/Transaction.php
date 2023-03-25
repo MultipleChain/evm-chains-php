@@ -40,7 +40,21 @@ final class Transaction
 
         $this->hash = $txHash;
         $this->provider = $provider;
+    }
 
+    /**
+     * @return string
+     */
+    public function getHash() : string
+    {
+        return $this->hash;
+    }
+
+    /**
+     * @return object|null
+     */
+    public function getData() : ?object
+    {
         $this->provider->methods->getTransactionByHash($this->hash, function($err, $tx){
             if ($err) {
                 throw new \Exception($err->getMessage(), $err->getCode());
@@ -61,21 +75,7 @@ final class Transaction
                 $this->data->gasUsed = isset($tx->gasUsed) ? $tx->gasUsed : null;
             }
         });
-    }
-
-    /**
-     * @return string
-     */
-    public function getHash() : string
-    {
-        return $this->hash;
-    }
-
-    /**
-     * @return object|null
-     */
-    public function getData() : ?object
-    {
+        
         return $this->data;
     }
 
