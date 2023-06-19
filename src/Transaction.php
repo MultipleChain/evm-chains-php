@@ -120,9 +120,9 @@ final class Transaction
     }
 
     /**
-     * @return bool
+     * @return ?bool
      */
-    public function validate() : bool
+    public function validate() : ?bool
     {
         $result = null;
 
