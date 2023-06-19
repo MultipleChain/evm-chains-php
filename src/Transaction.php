@@ -40,12 +40,6 @@ final class Transaction
 
         $this->hash = $txHash;
         $this->provider = $provider;
-
-        try {
-            $this->getData();
-        } catch (Exception $e) {
-            throw new \Exception($e->getMessage());
-        }
     }
 
     /**
@@ -126,9 +120,9 @@ final class Transaction
     }
 
     /**
-     * @return ?bool
+     * @return bool
      */
-    public function getStatus() : ?bool
+    public function validate() : bool
     {
         $result = null;
 
@@ -145,20 +139,6 @@ final class Transaction
         }
         
         return $result;
-    }
-
-    /**
-     * @return bool
-     */
-    public function validate() : bool
-    {
-        $result =  $this->getStatus();
-
-        if (is_bool($result)) {
-            return $result;
-        } else {
-            return $this->validate();
-        }
     }
 
     /**

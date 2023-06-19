@@ -5,6 +5,7 @@ namespace MultipleChain\EvmChains;
 use Web3\Web3;
 use Web3\Eth;
 use Exception;
+use BeycanPress\Http\Client;
 use Web3\Providers\HttpProvider;
 use MultipleChain\EvmBasedChains;
 use Web3\RequestManagers\HttpRequestManager;
@@ -45,6 +46,11 @@ final class Provider
     public $web3;
 
     /**
+     * @var string
+     */
+    public $moralisApiKey;
+
+    /**
      * Eth instance / RPC Api methods
      * @var Eth
      */
@@ -83,8 +89,9 @@ final class Provider
      * @param boolean|null $testnet
      * @param integer $timeOut
      */
-    public function __construct($network, bool $testnet = null, int $timeOut = 5)
+    public function __construct($network, bool $testnet = null, ?string $moralisApiKey = null, int $timeOut = 5)
     {
+        $this->moralisApiKey = $moralisApiKey;
         $networks = $testnet ? EvmBasedChains::$testnets : EvmBasedChains::$mainnets;
 
         if (is_object($network)) {
@@ -105,6 +112,47 @@ final class Provider
         $this->methods = $this->web3->eth;
     
         $this->time = time();
+    }
+
+    /**
+     * @param string $address
+     * @param string $tokenAddress
+     * @return object
+     */
+    public function getLastTransactionByReceiver(string $receiver, ?string $tokenAddress = null) : object
+    {
+        $client = new Client();
+
+        $client->addHeaders([
+            "Content-Type" => "application/json",
+            "X-API-Key" => $this->moralisApiKey
+        ]);
+
+        $hexId = $this->network->hexId;
+        $result = $client->get("https://deep-index.moralis.io/api/v2/$receiver?chain=$hexId&limit=1");
+        
+        if (!isset($result->result[0])) {
+            return (object) [
+                "hash" => null,
+                "amount" => 0
+            ];
+        }
+        
+        $tx = $result->result[0];
+
+        if ($tokenAddress) {
+            $tx = $this->Transaction($hash);
+            $data = $this->decodeInput();
+            $token = $this->Token($tokenAddress);
+            $amount = Utils::toDec($data->amount, $token->getDecimals());
+        } else {
+            $amount = floatval(Utils::toDec($tx->value, $this->Coin()->getDecimals()));
+        }
+
+        return (object) [
+            "hash" => $tx->hash,
+            "amount" => $amount
+        ];
     }
 
     /**
