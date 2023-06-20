@@ -84,6 +84,7 @@ final class Transaction
      */
     public function decodeInput() : ?object
     {
+        $this->getData();
         $input = $this->data->input;
         $pattern = '/.+?(?=000000000000000000000000)/';
         preg_match($pattern, $input, $matches, PREG_OFFSET_CAPTURE, 0);
@@ -125,6 +126,7 @@ final class Transaction
      */
     public function validate() : ?bool
     {
+        $this->getData();
         $result = null;
 
         if ($this->data == null) {
