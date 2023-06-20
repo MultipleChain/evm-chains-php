@@ -105,6 +105,7 @@ final class Transaction
     public function getConfirmations() : int
     {
         try {
+            $this->getData();
             $currentBlock = $this->provider->getBlockNumber();
             if ($this->data->blockNumber === null) return 0;
             
