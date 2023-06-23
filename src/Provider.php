@@ -80,12 +80,16 @@ final class Provider
     ];
 
     /**
-     * @param string|array $network
-     * @param boolean|null $testnet
-     * @param integer $timeOut
+     * @param object|array $options
      */
-    public function __construct($network, bool $testnet = null, int $timeOut = 5)
+    public function __construct($options)
     {
+        $options = is_array($options) ? (object) $options : $options;
+
+        // Set params
+        $network = isset($options->network) ? $options->network : 'mainnet';
+        $timeOut = isset($options->timeOut) ? $options->timeOut : 60;
+        $testnet = isset($options->testnet) ? $options->testnet : false;
         $networks = $testnet ? EvmBasedChains::$testnets : EvmBasedChains::$mainnets;
 
         if (is_object($network)) {
