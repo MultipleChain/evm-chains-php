@@ -4,43 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "035fa1f69589fd4e7cfd2f5a3bd28c58",
+    "content-hash": "539e065c1a8af5dcae1bd3148bdc1217",
     "packages": [
-        {
-            "name": "beycanpress/http",
-            "version": "0.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/BeycanPress/http.git",
-                "reference": "c405b3889cb803f8207184ae7d9f74ed443384f1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/BeycanPress/http/zipball/c405b3889cb803f8207184ae7d9f74ed443384f1",
-                "reference": "c405b3889cb803f8207184ae7d9f74ed443384f1",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "BeycanPress\\Http\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "description": "A simple and useful library for HTTP requests, response and client.",
-            "homepage": "https://github.com/BeycanPress/http",
-            "support": {
-                "issues": "https://github.com/BeycanPress/http/issues",
-                "source": "https://github.com/BeycanPress/http/tree/0.1.4"
-            },
-            "time": "2023-09-29T03:37:46+00:00"
-        },
         {
             "name": "guzzlehttp/guzzle",
             "version": "7.8.0",
