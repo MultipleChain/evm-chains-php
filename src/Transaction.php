@@ -129,15 +129,11 @@ final class Transaction
         $this->getData();
         $result = null;
 
-        if ($this->data == null) {
-            $result = false;
-        } else {
-            if ($this->data->blockNumber !== null) {
-                if ($this->data->status == '0x0') {
-                    $result = false;
-                } else {
-                    $result = true;
-                }
+        if ($this->data && $this->data->blockNumber !== null) {
+            if ($this->data->status == '0x0') {
+                $result = false;
+            } else {
+                $result = true;
             }
         }
         
