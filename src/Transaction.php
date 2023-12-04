@@ -80,6 +80,15 @@ final class Transaction
     }
 
     /**
+     * @return string
+     */
+    public function getFrom() : string
+    {
+        $this->getData();
+        return $this->data->from;
+    }
+
+    /**
      * @return object|null
      */
     public function decodeInput() : ?object
