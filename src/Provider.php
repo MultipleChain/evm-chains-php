@@ -370,6 +370,15 @@ final class Provider
 
     /**
      * @param string $address
+     * @return NFT
+     */
+    public function NFT(string $address, array $abi = []) : NFT
+    {
+        return new NFT($address, $abi, $this);
+    }
+
+    /**
+     * @param string $address
      * @return Token
      */
     public function Token(string $address, array $abi = []) : Token
