@@ -96,6 +96,7 @@ final class Transaction
         $this->getData();
         $input = $this->data->input;
         $pattern = '/.+?(?=000000000000000000000000)/';
+        /** @var array<mixed> $matches */
         preg_match($pattern, $input, $matches, PREG_OFFSET_CAPTURE, 0);
         $method = $matches[0][0];
 
@@ -200,7 +201,7 @@ final class Transaction
 
         if ($this->verifyTokenTransfer($address)) {
             $decodedInput = $this->decodeInput();
-            $token = new Token($address, [], $this->provider);
+            $token = new Token($address, $this->provider, []);
 
             $data = (object) [
                 "receiver" => strtolower($decodedInput->receiver),
